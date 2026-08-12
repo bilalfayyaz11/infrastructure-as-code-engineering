@@ -1,0 +1,32 @@
+---
+- name: Manage local application configuration
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Create application directory
+      ansible.builtin.file:
+        path: /tmp/myapp
+        state: directory
+        mode: '0755'
+
+    - name: Create configuration file with initial content
+      ansible.builtin.copy:
+        content: |
+          # App Configuration File
+          application=myapp
+        dest: /tmp/myapp/app.conf
+        mode: '0644'
+      notify: Config Changed
+
+    - name: Ensure production environment setting exists
+      ansible.builtin.lineinfile:
+        path: /tmp/myapp/app.conf
+        line: "environment=production"
+        state: present
+      notify: Config Changed
+
+  handlers:
+    - name: Config Changed
+      ansible.builtin.debug:
+        msg: "Configuration file was updated! Please review changes."
