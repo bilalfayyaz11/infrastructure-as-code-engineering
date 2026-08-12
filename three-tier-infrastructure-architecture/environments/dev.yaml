@@ -1,0 +1,35 @@
+application:
+  name: sample-three-tier-app
+  environment: dev
+
+tiers:
+  web:
+    type: compute
+    instance_count: 2
+    cpu: "1 vCPU"
+    memory: "2GB"
+    port: 80
+
+  app:
+    type: compute
+    instance_count: 2
+    cpu: "2 vCPU"
+    memory: "4GB"
+    port: 8080
+
+  database:
+    type: storage
+    engine: postgresql
+    version: "14"
+    storage_size: "20GB"
+    port: 5432
+
+networking:
+  vpc_name: dev-vpc
+  subnets:
+    - name: web-subnet
+      cidr: 10.0.1.0/24
+    - name: app-subnet
+      cidr: 10.0.2.0/24
+    - name: db-subnet
+      cidr: 10.0.3.0/24
