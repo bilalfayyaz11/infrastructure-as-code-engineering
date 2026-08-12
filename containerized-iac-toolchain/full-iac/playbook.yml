@@ -1,0 +1,10 @@
+---
+- name: Validate Ansible inside the IaC toolbox
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Print IaC toolbox validation message
+      ansible.builtin.debug:
+        msg: "Hello from Ansible inside Docker"
